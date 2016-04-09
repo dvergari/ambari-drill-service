@@ -3,6 +3,11 @@ Ambari service for Apache Drill
 
 Ambari service to run and manage Apache Drill. For more information about Apache Drill visit <a href>https://drill.apache.org/</a>
 
+  Requirements:
+    - RHEL/CENTOS 7.1
+    - Ambari 2.X
+    - HDP 2.4
+    
   Features:
     - Allows to install Apache Drill on an Ambari-managed cluster
     - Edit drill-overrides.conf and drill-env.sh via ambari
