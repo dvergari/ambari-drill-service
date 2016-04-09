@@ -1,2 +1,2 @@
 # ambari-drill-service
-Ambari service for Apache Drill
+Ambari service for Drill Service

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+  <property>
+    <name>drill_install_dir</name>
+    <value>/opt/apache-drill</value>
+    <description>Location to install Drill</description>
+  </property>
+  <property>
+    <name>drill_temp_file</name>
+    <value>/tmp/apache-drill.tar.gz</value>
+  </property>
+  <property>
+    <name>hadoop_core_site</name>
+    <value>/etc/hadoop/conf/core-site.xml</value>
+    <description>Hadoop core-site.xml file location</description>
+  </property>
+  <property>
+    <name>hadoop_hdfs_site</name>
+    <value>/etc/hadoop/conf/hdfs-site.xml</value>
+    <description>Hadoop hdfs-site.xml file location</description>
+  </property>
+</configuration>
+

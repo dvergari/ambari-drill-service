@@ -1,0 +1,47 @@
+<metainfo>
+  <schemaVersion>2.0</schemaVersion>
+  <services>
+    <service>
+      <name>DRILL</name>
+      <displayName>Apache Drill</displayName>
+      <comment>Schema-free SQL Query Engine for Hadoop, NoSQL and Cloud Storage</comment>
+      <version>1.6.0</version>
+      <components>
+        <component>  
+          <name>DRILL_MASTER</name>
+          <displayName>Drill Master</displayName>
+          <category>MASTER</category>
+          <cardinality>1+</cardinality>
+          <dependencies>
+            <dependency>
+              <name>HDFS</name>
+              <scope>cluster</scope>
+            </dependency>
+          </dependencies>
+          <commandScript>
+            <script>scripts/drill.py</script>
+            <scriptType>PYTHON</scriptType>
+            <timeout>600</timeout>
+          </commandScript>
+          <configFiles>
+            <configFile>
+              <type>env</type>
+              <fileName>drill-env.xml</fileName>
+              <dictionaryName>drill-env</dictionaryName>
+            </configFile>
+            <configFile>
+              <type>config</type>
+              <fileName>drill-override.xml</fileName>
+              <dictionaryName>drill-override</dictionaryName>
+            </configFile>
+            <configFile>
+              <type>config</type>
+              <fileName>drill-ambari-config.xml</fileName>
+              <dictionaryName>drill-ambari-config</dictionaryName>
+            </configFile>
+          </configFiles>
+        </component>  
+      </components>
+    </service>
+  </services>
+</metainfo>
