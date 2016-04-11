@@ -16,8 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-import sys, os, pwd, grp
+import sys, os, pwd, grp, io
 from resource_management import *
+from resource_management.libraries.functions import check_process_status
 
 class Master(Script):
   def install(self, env):
@@ -38,17 +39,17 @@ class Master(Script):
   def stop(self, env):
     import params
     self.configure(env)
-    Execute(params.drill_install_dir + '/apache-drill-1.6.0/bin/drillbit.sh stop')
+    Execute(params.drill_install_dir + '/apache-drill-1.6.0/bin/drillbit.sh stop', user=params.drill_user)
 
   def start(self, env):
     import params
     self.configure(env)
-    Execute(params.drill_install_dir + '/apache-drill-1.6.0/bin/drillbit.sh start')
+    Execute(params.drill_install_dir + '/apache-drill-1.6.0/bin/drillbit.sh start', user=params.drill_user)
 
   def status(self, env):
     import params
-    self.configure(env)
-    Execute(params.drill_install_dir + '/apache-drill-1.6.0/bin/drillbit.sh status')
+    env.set_params(params)
+    check_process_status(params.drill_pid_file)
 
   def configure(self, env, isInstall=False):
     import params
@@ -57,8 +58,27 @@ class Master(Script):
     drill_override_content=InlineTemplate(params.drill_override_content)
     drill_env_content=InlineTemplate(params.drill_env_content)
 
-    File(params.drill_install_dir + '/apache-drill-1.6.0/conf/drill-override.conf', content=drill_override_content, owner=params.drill_user)
-    File(params.drill_install_dir + '/apache-drill-1.6.0/conf/drill-env.sh', content=drill_env_content, owner=params.drill_user)
+    if isInstall:
+      Execute('chown -R ' + params.drill_user + ':' + params.drill_group + ' ' + params.drill_install_dir)
+
+    File(params.drill_install_dir + '/apache-drill-1.6.0/conf/drill-override.conf', content=drill_override_content, owner=params.drill_user, group=params.drill_group)
+    File(params.drill_install_dir + '/apache-drill-1.6.0/conf/drill-env.sh', content=drill_env_content, owner=params.drill_user, group=params.drill_group)
+    XmlConfig("hdfs-site.xml", 
+              conf_dir=params.drill_install_dir + '/apache-drill-1.6.0/conf',
+              configurations=params.config['configurations']['hdfs-site'],
+              configuration_attributes=params.config['configuration_attributes']['hdfs-site'],
+              owner=params.drill_user,
+              group=params.drill_group,
+              mode=0644)
+    XmlConfig("core-site.xml", 
+              conf_dir=params.drill_install_dir + '/apache-drill-1.6.0/conf',
+              configurations=params.config['configurations']['core-site'],
+              configuration_attributes=params.config['configuration_attributes']['core-site'],
+              owner=params.drill_user,
+              group=params.drill_group,
+              mode=0644)
+    Execute('hdfs dfs -mkdir -p ' + params.sys_store_provider_zk_blobroot, user='hdfs')
+    Execute('hdfs dfs -chown -R ' + params.drill_user + ':' + params.drill_group + ' ' + params.sys_store_provider_zk_blobroot, user='hdfs')
 
   def create_linux_user(self, user, group):
     try: pwd.getpwnam(user)

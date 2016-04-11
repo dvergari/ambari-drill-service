@@ -15,6 +15,12 @@
     <description>Zookeeper connection string</description>
   </property>
   <property>
+    <name>sys_store_provider_zk_blobroot</name>
+    <displayName>Zookeeper</displayName>
+    <value>/drillpstore</value>
+    <description>Drill pstore directory on hdfs</description>
+  </property>
+  <property>
     <name>content</name>
     <value>
 # Licensed to the Apache Software Foundation (ASF) under one or more
@@ -39,7 +45,8 @@
 # See 'drill-override-example.conf' for example configurations
 ll.exec: {
   cluster-id: "{{cluster_id}}",
-  zk.connect: "{{zk_connect}}"
+  zk.connect: "{{zk_connect}}",
+  sys.store.provider.zk.blobroot: "{{hdfs_default_fs}}://{{sys_store_provider_zk_blobroot}}"
 }
 
     </value>

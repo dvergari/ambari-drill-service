@@ -3,7 +3,7 @@
   <services>
     <service>
       <name>DRILL</name>
-      <displayName>Apache Drill</displayName>
+      <displayName>Drill</displayName>
       <comment>Schema-free SQL Query Engine for Hadoop, NoSQL and Cloud Storage</comment>
       <version>1.6.0</version>
       <components>
@@ -40,6 +40,11 @@
               <dictionaryName>drill-ambari-config</dictionaryName>
             </configFile>
           </configFiles>
+          <configuration-dependencies>
+            <config-type>drill-env</config-type>
+            <config-type>drill-override</config-type>
+            <config-type>drill-ambari-config</config-type>
+          </configuration-dependencies>
         </component>  
       </components>
     </service>
