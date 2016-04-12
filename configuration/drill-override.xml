@@ -46,7 +46,7 @@
 drill.exec: {
   cluster-id: "{{cluster_id}}",
   zk.connect: "{{zk_connect}}",
-  sys.store.provider.zk.blobroot: "{{hdfs_default_fs}}://{{sys_store_provider_zk_blobroot}}"
+  sys.store.provider.zk.blobroot: "{{hdfs_default_fs}}/{{sys_store_provider_zk_blobroot}}"
 }
 
     </value>
