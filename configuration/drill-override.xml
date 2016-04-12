@@ -43,7 +43,7 @@
 #  This file is in HOCON format, see https://github.com/typesafehub/config/blob/master/HOCON.md for more information.
 
 # See 'drill-override-example.conf' for example configurations
-ll.exec: {
+drill.exec: {
   cluster-id: "{{cluster_id}}",
   zk.connect: "{{zk_connect}}",
   sys.store.provider.zk.blobroot: "{{hdfs_default_fs}}://{{sys_store_provider_zk_blobroot}}"
